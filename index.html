@@ -4,20 +4,23 @@
     <meta charset="utf-8">
     <title>Top songs in Greece from LastFM</title>
     <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
     <script src="scripts/react.js"></script>
     <script src="scripts/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
-    <script src="scripts/jquery.js"></script>
   </head>
   <body>
     <header>
-        <h1>Top songs in Greece from LastFM</h1>
+        <h1 class="page__title">Top songs in Greece from LastFM</h1>
     </header>
     <main id="content">
       
     </main>
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/masonry.pkgd.min.js"></script>
+    <script src="scripts/imagesloaded.pkgd.min.js"></script>
     <script type="text/babel">
-      
+      // Create Grid component
       var Grid = React.createClass({
         getSongs: function() {
           jQuery.ajax({
@@ -42,19 +45,34 @@
           var grid = [];
           this.state.data.forEach(function(track) {
             var rankV = parseInt(track['@attr'].rank) + 1;
-            grid.push(<GridItem image={track.image[3]['#text']} rank={rankV} title={track.name} artist={track.artist.name} listeners={track.listeners}/>)
+            grid.push(<GridItem key={rankV} image={track.image[3]['#text']} rank={rankV} title={track.name} artist={track.artist.name} listeners={track.listeners}/>)
           });
           return (
-            <div className="grid">{grid}</div>
+            <div ref="masonryGrid" className="grid"><div className="grid__sizer"></div>{grid}</div>
           )
+        },
+        componentDidUpdate: function() {
+          this.enablingMasonry();
+          jQuery(this.refs.masonryGrid).masonry('reloadItems');
+        },
+        enablingMasonry: function() {
+          var $grid = jQuery(this.refs.masonryGrid).masonry({
+            itemSelector: '.grid__item',
+            columnWidth: '.grid__sizer',
+            percentPosition: true
+          });
+          $grid.imagesLoaded().progress( function() {
+            $grid.masonry('layout');
+          });
         }
       });
 
-      //create GridItem component
+      // Create GridItem component
       var GridItem = React.createClass({
         render: function(){
           return (
             <div className="grid__item">
+              <img src={this.props.image} className="grid__item__image" />
               <div className="flipper">
                 <FlipperFront image={this.props.image} />
                 <FlipperBack rank={this.props.rank} title={this.props.title} artist={this.props.artist} listeners={this.props.listeners}/>
@@ -64,7 +82,7 @@
         }
       });
 
-      //create FlipperFront component
+      // Create FlipperFront component
       var FlipperFront = React.createClass({
         render: function(){
           var divStyle = { backgroundImage: 'url(' + this.props.image + ')' };
@@ -74,7 +92,7 @@
         }
       });
 
-      //create FlipperBack component
+      // Create FlipperBack component
       var FlipperBack = React.createClass({
         render: function(){
           return (

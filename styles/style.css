@@ -1,53 +1,133 @@
-.grid__sizer,
-.grid__item {
-  float: left;
-  width: 20%;
-  height: 20%;
+/* Reset styling */
+html, body, div, span, applet, object, iframe, table, caption, tbody, tfoot, thead, tr, th, td, 
+del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, 
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, 
+dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
+	vertical-align: baseline;
+	font-family: inherit;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	outline: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
 }
-.flipper,
-.flipper__front {
-	background-size: cover;
-	width: 300px;
-	height: 300px;
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+body {
+	background: white;
+	line-height: 1;
+	color: black;
+}
+ol, ul {
+	list-style: none;
+}
+/* tables still need cellspacing="0" in the markup */
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th, td {
+	font-weight: normal;
+	text-align: left;
+}
+/* remove possible quote marks (") from <q> & <blockquote> */
+blockquote:before, blockquote:after, q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+* { box-sizing: border-box; }
+
+/* Base styling */
+html, body {
+	width: 100%;
+}
+body {
+	font-family: 'Dosis', sans-serif;
+}	
+.page__title {
+	position: absolute;
+	background-color: rgba(255,255,255, 0.6);
+	color: black;
+	bottom: 0;
+	right: 0;
+	padding: 2px;
+	z-index: 100;
 }
 
+/* Grid styling */
+.grid {
+	width: 100%;
+	margin: 0 auto;
+}
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.flipper,
+.flipper__front,
+.flipper__back {
+  width: 100%;
+  height: 100%;
+}
+.grid__sizer,
+.grid__item {
+	width: 100%;
+}
 /* entire container, keeps perspective */
 .grid__item {
 	perspective: 1000px;
+	float: left;
+	/*transition: all 0.5s ease;*/
 }
 /* flip the pane when hovered */
-.grid__item:hover .flipper, .grid__item.hover .flipper {
+.grid__item:hover .flipper {
 	transform: rotateY(180deg);
 }
-
-.grid__item, .flipper__front, .flipper__back {
-	width: 300px;
-	height: 300px;
-}
-
-/* flip speed goes here */
 .flipper {
 	transition: 0.6s;
 	transform-style: preserve-3d;
-	position: relative;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
-
-/* hide back of pane during swap */
-.flipper__front, .flipper__back {
+.flipper__front, 
+.flipper__back {
 	backface-visibility: hidden;
 	position: absolute;
 	top: 0;
 	left: 0;
 }
-
-/* front pane, placed above back */
 .flipper__front {
+	background-size: cover;
 	z-index: 2;
 	/* for firefox 31 */
 	transform: rotateY(0deg);
 }
-
-/* back, initially hidden pane */
+.grid__item__image {
+	visibility: hidden;
+	width: 100%;
+	height: auto;
+}
 .flipper__back {
 	transform: rotateY(180deg);
+}
+@media(min-width: 480px){
+	.grid__sizer,
+	.grid__item {
+		width: 25%;
+	}
+}
+@media(min-width: 992px) {
+	.grid__sizer,
+	.grid__item {
+		width: 20%;
+	}
 }
