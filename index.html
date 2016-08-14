@@ -16,6 +16,12 @@
     <main id="content">
       
     </main>
+    <div class="loading">
+      <div class="loading__inner">
+        <img src="images/last-fm-icon.png" class="loading__inner__image" />
+        <p class="loading__inner__text">Loading content from LastFM</p>
+      </div>
+    </div>
     <script src="scripts/jquery.js"></script>
     <script src="scripts/masonry.pkgd.min.js"></script>
     <script src="scripts/imagesloaded.pkgd.min.js"></script>
@@ -54,6 +60,9 @@
         componentDidUpdate: function() {
           this.enablingMasonry();
           jQuery(this.refs.masonryGrid).masonry('reloadItems');
+          setTimeout(function() {
+            jQuery('.loading').fadeOut(500, function() { jQuery('.loading').remove(); })
+          }, 1000);
         },
         enablingMasonry: function() {
           var $grid = jQuery(this.refs.masonryGrid).masonry({
@@ -97,10 +106,12 @@
         render: function(){
           return (
             <div className="flipper__back">
-              <span className="rank">{this.props.rank}</span>
-              <span className="song-title">{this.props.title}</span>
-              by&nbsp;<span className="song-artist">{this.props.artist}</span>
-              <span className="listeners-count">{this.props.listeners}</span>
+              <div className="flipper__back__inner">
+                <span className="rank">{this.props.rank}</span>
+                <span className="song-title">{this.props.title}</span>
+                <span className="song-artist">by&nbsp;{this.props.artist}</span>
+                <span className="listeners-count"><span className="label">Listeners:</span>&nbsp;{this.props.listeners}</span>
+              </div>
             </div>
           )
         }

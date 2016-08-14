@@ -88,7 +88,8 @@ body {
 	/*transition: all 0.5s ease;*/
 }
 /* flip the pane when hovered */
-.grid__item:hover .flipper {
+.grid__item:hover .flipper,
+.grid__item:focus .flipper {
 	transform: rotateY(180deg);
 }
 .flipper {
@@ -117,7 +118,33 @@ body {
 	height: auto;
 }
 .flipper__back {
+	display: table;
+	text-align: center;
 	transform: rotateY(180deg);
+}
+.flipper__back__inner {
+	vertical-align: middle;
+	display: table-cell;
+	text-align: center;
+}
+.rank,
+.song-title,
+.song-artist,
+.listeners-count {
+	display: block;
+	margin-bottom: 10px;
+}
+.rank {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #dc2424;
+    color: #fff;
+    line-height: 30px;
+    margin: 0 auto 10px;
+}
+.label {
+	color: #dc2424;
 }
 @media(min-width: 480px){
 	.grid__sizer,
@@ -131,3 +158,33 @@ body {
 		width: 20%;
 	}
 }
+
+/* Loading screen */
+.loading {
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(255,255,255, 0.6);
+	z-index: 99;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	display: table;
+}
+.loading__inner {
+	display: table-cell;
+	vertical-align: middle;
+}
+.loading__inner__image {
+	-webkit-animation:spin 2s linear infinite;
+    -moz-animation:spin 2s linear infinite;
+    animation:spin 2s linear infinite;
+}
+.loading__inner__text {
+	font-size: 26px;
+	color: #272727;
+	width: 100%;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
