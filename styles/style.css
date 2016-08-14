@@ -51,7 +51,7 @@ body {
 	font-family: 'Dosis', sans-serif;
 }	
 .page__title {
-	position: absolute;
+	position: fixed;
 	background-color: rgba(255,255,255, 0.6);
 	color: black;
 	bottom: 0;
@@ -85,12 +85,23 @@ body {
 .grid__item {
 	perspective: 1000px;
 	float: left;
+	cursor: pointer;
 	/*transition: all 0.5s ease;*/
 }
+@media(min-width: 480px) {
+	.grid__item {
+		cursor: inherit;
+	}
+}
 /* flip the pane when hovered */
-.grid__item:hover .flipper,
-.grid__item:focus .flipper {
+
+.grid__item.hover .flipper {
 	transform: rotateY(180deg);
+}
+@media(min-width: 767px) {
+	.grid__item:hover .flipper {
+		transform: rotateY(180deg);		
+	}
 }
 .flipper {
 	transition: 0.6s;
@@ -102,6 +113,7 @@ body {
 .flipper__front, 
 .flipper__back {
 	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
 	position: absolute;
 	top: 0;
 	left: 0;

@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Top songs in Greece from LastFM</title>
     <link rel="stylesheet" href="styles/style.css">
     <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
@@ -63,6 +64,9 @@
           setTimeout(function() {
             jQuery('.loading').fadeOut(500, function() { jQuery('.loading').remove(); })
           }, 1000);
+          jQuery('.grid__item').click(function() {
+            jQuery(this).toggleClass('hover');
+          });
         },
         enablingMasonry: function() {
           var $grid = jQuery(this.refs.masonryGrid).masonry({
